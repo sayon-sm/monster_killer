@@ -1,7 +1,13 @@
-const health = prompt('enter max health of your player');
+/* taking user input for maximum life
+checking if its a valid number */
+let health = prompt('enter max health of your player');
+if (!health || isNaN(health)) {
+  health = 100;
+  alert('invalid input \nmax life is 100');
+}
 adjustHealthBars(health);
 
-const damage = 20;
+const damage = 10;
 const heal = 10;
 const log = [];
 
@@ -10,7 +16,7 @@ let playerDamage;
 
 function attack() {
   monsterDamage = dealMonsterDamage(damage);
-  playerDamage = dealPlayerDamage(damage * 1.5);
+  playerDamage = dealPlayerDamage(damage);
   const displayLog = {
     damageToMonster: monsterDamage,
     damageToPlayer: playerDamage,
@@ -19,8 +25,8 @@ function attack() {
 }
 
 function strongAttack() {
-  monsterDamage = dealMonsterDamage(damage * 3);
-  playerDamage = dealPlayerDamage(damage * 1.5);
+  monsterDamage = dealMonsterDamage(damage * 2);
+  playerDamage = dealPlayerDamage(damage * 2);
   const displayLog = {
     damageToMonster: monsterDamage,
     damageToPlayer: playerDamage,
