@@ -6,9 +6,9 @@ if (!health || isNaN(health)) {
   alert('invalid input \nmax life is 100');
 }
 adjustHealthBars(health);
-
-const damage = 10;
-const heal = 10;
+let life = 1; //bonus life counter
+const damage = health / 10;
+const heal = health / 15;
 
 // variable to maintain log
 const log = [];
@@ -17,24 +17,24 @@ let playerDamage;
 
 function attack() {
   monsterDamage = dealMonsterDamage(damage);
-  playerDamage = dealPlayerDamage(damage);
+  playerDamage = dealPlayerDamage(damage * 2);
+  logic();
   const displayLog = {
     damageToMonster: monsterDamage,
     damageToPlayer: playerDamage,
   };
   log.push(displayLog);
-  logic();
 }
 
 function strongAttack() {
   monsterDamage = dealMonsterDamage(damage * 2);
   playerDamage = dealPlayerDamage(damage * 2);
+  logic();
   const displayLog = {
     damageToMonster: monsterDamage,
     damageToPlayer: playerDamage,
   };
   log.push(displayLog);
-  logic();
 }
 
 function healing() {
@@ -46,13 +46,29 @@ function loging() {
 }
 
 function logic() {
-  if (monsterHealthBar.value === 0 && playerHealthBar.value > 0) {
+  if (playerHealthBar.value === 0 && life > 0) {
+    --life;
+    alert(`Bonus life saved you !
+      your health is at ${health / 5}`);
+    setPlayerHealth(health / 5);
+    if (life) removeBonusLife();
+  }
+
+  if (monsterHealthBar.value === 0 && playerHealthBar.value > 0 && life > 0) {
     alert('PLAYER WON !');
     resetGame(health);
-  } else if (monsterHealthBar.value > 0 && playerHealthBar.value === 0) {
+  } else if (
+    monsterHealthBar.value > 0 &&
+    playerHealthBar.value === 0 &&
+    life === 0
+  ) {
     alert('MONSTER WON ! \nBetter luck next time.');
     resetGame(health);
-  } else if (monsterHealthBar.value === 0 && playerHealthBar.value === 0) {
+  } else if (
+    monsterHealthBar.value === 0 &&
+    playerHealthBar.value === 0 &&
+    life === 0
+  ) {
     alert('thats a DRAW !');
     resetGame(health);
   }
