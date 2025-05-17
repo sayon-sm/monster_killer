@@ -9,8 +9,9 @@ adjustHealthBars(health);
 
 const damage = 10;
 const heal = 10;
-const log = [];
 
+// variable to maintain log
+const log = [];
 let monsterDamage;
 let playerDamage;
 
@@ -22,6 +23,7 @@ function attack() {
     damageToPlayer: playerDamage,
   };
   log.push(displayLog);
+  logic();
 }
 
 function strongAttack() {
@@ -32,6 +34,7 @@ function strongAttack() {
     damageToPlayer: playerDamage,
   };
   log.push(displayLog);
+  logic();
 }
 
 function healing() {
@@ -40,6 +43,19 @@ function healing() {
 
 function loging() {
   console.log(log);
+}
+
+function logic() {
+  if (monsterHealthBar.value === 0 && playerHealthBar.value > 0) {
+    alert('PLAYER WON !');
+    resetGame(health);
+  } else if (monsterHealthBar.value > 0 && playerHealthBar.value === 0) {
+    alert('MONSTER WON ! \nBetter luck next time.');
+    resetGame(health);
+  } else if (monsterHealthBar.value === 0 && playerHealthBar.value === 0) {
+    alert('thats a DRAW !');
+    resetGame(health);
+  }
 }
 
 attackBtn.addEventListener('click', attack);
