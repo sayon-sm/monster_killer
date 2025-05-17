@@ -51,7 +51,7 @@ function logic() {
     alert(`Bonus life saved you !
       your health is at ${health / 5}`);
     setPlayerHealth(health / 5);
-    if (life) removeBonusLife();
+    if (!life) removeBonusLife();
   }
 
   if (monsterHealthBar.value === 0 && playerHealthBar.value > 0 && life > 0) {
