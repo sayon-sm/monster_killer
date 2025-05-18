@@ -38,7 +38,9 @@ function strongAttack() {
 }
 
 function healing() {
-  increasePlayerHealth(heal);
+  playerHealthBar.value < health / 2
+    ? increasePlayerHealth(heal)
+    : alert('healing not allowed \npast half life !');
 }
 
 function loging() {
