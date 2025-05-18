@@ -11,7 +11,7 @@ const damage = health / 10;
 const heal = health / 15;
 
 // variable to maintain log
-const log = [];
+const history = [];
 let monsterDamage;
 let playerDamage;
 
@@ -19,32 +19,34 @@ function attack() {
   monsterDamage = dealMonsterDamage(damage);
   playerDamage = dealPlayerDamage(damage);
   logic();
-  const displayLog = {
-    damageToMonster: monsterDamage,
-    damageToPlayer: playerDamage,
-  };
-  log.push(displayLog);
+  loging('ATTACK', monsterDamage, playerDamage);
 }
 
 function strongAttack() {
   monsterDamage = dealMonsterDamage(damage * 2);
   playerDamage = dealPlayerDamage(damage * 2);
   logic();
-  const displayLog = {
-    damageToMonster: monsterDamage,
-    damageToPlayer: playerDamage,
-  };
-  log.push(displayLog);
+  loging('STRONG ATTACK', monsterDamage, playerDamage);
 }
 
 function healing() {
   playerHealthBar.value < health / 2
     ? increasePlayerHealth(heal)
     : alert('healing not allowed \npast half life !');
+  loging('HEALING player', 0, 0);
 }
 
-function loging() {
-  console.log(log);
+function loging(operation, monsterDamage, playerDamage) {
+  const displayLog = {
+    What_Happened: operation,
+    damageToMonster: monsterDamage,
+    damageToPlayer: playerDamage,
+  };
+  history.push(displayLog);
+}
+
+function log() {
+  console.log(history);
 }
 
 function logic() {
@@ -58,12 +60,15 @@ function logic() {
     if (monsterHealthBar.value === 0 && playerHealthBar.value > 0) {
       alert('PLAYER WON !');
       resetGame(health);
+      loging('PLAYER WON', 0, 0);
     } else if (monsterHealthBar.value > 0 && playerHealthBar.value === 0) {
       alert('MONSTER WON ! \nBetter luck next time.');
       resetGame(health);
+      loging('MONSTER WON', 0, 0);
     } else if (monsterHealthBar.value === 0 && playerHealthBar.value === 0) {
       alert('thats a DRAW !');
       resetGame(health);
+      loging('DRAW', 0, 0);
     }
   }
 }
@@ -71,4 +76,4 @@ function logic() {
 attackBtn.addEventListener('click', attack);
 strongAttackBtn.addEventListener('click', strongAttack);
 healBtn.addEventListener('click', healing);
-logBtn.addEventListener('click', loging);
+logBtn.addEventListener('click', log);
