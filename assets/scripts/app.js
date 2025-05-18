@@ -1,7 +1,7 @@
 /* taking user input for maximum life
 checking if its a valid number */
-let health = prompt('enter max health of your player');
-if (!health || isNaN(health)) {
+let health = parseInt(prompt('enter max health of your player'));
+if (!health || health < 0) {
   health = 100;
   alert('invalid input \nmax life is 100');
 }
