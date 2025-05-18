@@ -17,7 +17,7 @@ let playerDamage;
 
 function attack() {
   monsterDamage = dealMonsterDamage(damage);
-  playerDamage = dealPlayerDamage(damage * 2);
+  playerDamage = dealPlayerDamage(damage);
   logic();
   const displayLog = {
     damageToMonster: monsterDamage,
@@ -52,25 +52,17 @@ function logic() {
       your health is at ${health / 5}`);
     setPlayerHealth(health / 5);
     if (!life) removeBonusLife();
-  }
-
-  if (monsterHealthBar.value === 0 && playerHealthBar.value > 0 && life > 0) {
-    alert('PLAYER WON !');
-    resetGame(health);
-  } else if (
-    monsterHealthBar.value > 0 &&
-    playerHealthBar.value === 0 &&
-    life === 0
-  ) {
-    alert('MONSTER WON ! \nBetter luck next time.');
-    resetGame(health);
-  } else if (
-    monsterHealthBar.value === 0 &&
-    playerHealthBar.value === 0 &&
-    life === 0
-  ) {
-    alert('thats a DRAW !');
-    resetGame(health);
+  } else {
+    if (monsterHealthBar.value === 0 && playerHealthBar.value > 0) {
+      alert('PLAYER WON !');
+      resetGame(health);
+    } else if (monsterHealthBar.value > 0 && playerHealthBar.value === 0) {
+      alert('MONSTER WON ! \nBetter luck next time.');
+      resetGame(health);
+    } else if (monsterHealthBar.value === 0 && playerHealthBar.value === 0) {
+      alert('thats a DRAW !');
+      resetGame(health);
+    }
   }
 }
 
