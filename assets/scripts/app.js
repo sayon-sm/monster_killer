@@ -19,19 +19,15 @@ let monsterDamage;
 let playerDamage;
 
 function attack() {
-  monsterDamage = dealMonsterDamage(damage);
-  playerDamage = dealPlayerDamage(damage);
-  playerAttack.push(Math.floor(monsterDamage));
-  monsterAttack.push(Math.floor(playerDamage));
+  playerAttack.push(Math.floor(dealMonsterDamage(damage)));
+  monsterAttack.push(Math.floor(dealPlayerDamage(damage)));
   operation.push('ATTACK');
   logic();
 }
 
 function strongAttack() {
-  monsterDamage = dealMonsterDamage(damage * 2);
-  playerDamage = dealPlayerDamage(damage * 2);
-  playerAttack.push(Math.floor(monsterDamage));
-  monsterAttack.push(Math.floor(playerDamage));
+  playerAttack.push(Math.floor(dealMonsterDamage(damage * 2)));
+  monsterAttack.push(Math.floor(dealPlayerDamage(damage * 2)));
   operation.push('STRONG ATTACK');
   logic();
 }
