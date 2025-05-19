@@ -1,6 +1,6 @@
 /* taking user input for maximum life
 checking if its a valid number */
-let health = parseInt(prompt('enter max health of your player'));
+let health = parseInt(prompt('enter max health of your player', '100'));
 if (!health || health < 0) {
   health = 100;
   alert('invalid input \nmax life is 100');
