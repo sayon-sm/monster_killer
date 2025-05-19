@@ -11,42 +11,55 @@ const damage = health / 10;
 const heal = health / 15;
 
 // variable to maintain log
-const history = [];
+let history = [];
+let playerAttack = [];
+let monsterAttack = [];
+let operation = [];
 let monsterDamage;
 let playerDamage;
 
 function attack() {
   monsterDamage = dealMonsterDamage(damage);
   playerDamage = dealPlayerDamage(damage);
+  playerAttack.push(Math.floor(monsterDamage));
+  monsterAttack.push(Math.floor(playerDamage));
+  operation.push('ATTACK');
   logic();
-  loging('ATTACK', monsterDamage, playerDamage);
 }
 
 function strongAttack() {
   monsterDamage = dealMonsterDamage(damage * 2);
   playerDamage = dealPlayerDamage(damage * 2);
+  playerAttack.push(Math.floor(monsterDamage));
+  monsterAttack.push(Math.floor(playerDamage));
+  operation.push('STRONG ATTACK');
   logic();
-  loging('STRONG ATTACK', monsterDamage, playerDamage);
 }
 
 function healing() {
   playerHealthBar.value < health / 2
     ? increasePlayerHealth(heal)
     : alert('healing not allowed \npast half life !');
-  loging('HEALING player', 0, 0);
+  operation.push('HEAL');
 }
 
-function loging(operation, monsterDamage, playerDamage) {
+function loging(verdict, operation, monsterDamage, playerDamage) {
   const displayLog = {
-    What_Happened: operation,
-    damageToMonster: monsterDamage,
-    damageToPlayer: playerDamage,
+    verdict: verdict,
+    operation: operation,
+    PlayerAttackBy: monsterDamage,
+    MonsterAttackBy: playerDamage,
   };
   history.push(displayLog);
 }
 
 function log() {
   console.log(history);
+
+  history = [];
+  playerAttack = [];
+  monsterAttack = [];
+  operation = [];
 }
 
 function logic() {
@@ -60,15 +73,15 @@ function logic() {
     if (monsterHealthBar.value === 0 && playerHealthBar.value > 0) {
       alert('PLAYER WON !');
       resetGame(health);
-      loging('PLAYER WON', 0, 0);
+      loging('PLAYER WON', operation, playerAttack, monsterAttack);
     } else if (monsterHealthBar.value > 0 && playerHealthBar.value === 0) {
       alert('MONSTER WON ! \nBetter luck next time.');
       resetGame(health);
-      loging('MONSTER WON', 0, 0);
+      loging('MONSTER WON', operation, playerAttack, monsterAttack);
     } else if (monsterHealthBar.value === 0 && playerHealthBar.value === 0) {
       alert('thats a DRAW !');
       resetGame(health);
-      loging('DRAW', 0, 0);
+      loging('DRAW', operation, playerAttack, monsterAttack);
     }
   }
 }
