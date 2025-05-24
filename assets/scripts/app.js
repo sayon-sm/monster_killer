@@ -19,17 +19,10 @@ let operation = [];
 let monsterDamage;
 let playerDamage;
 
-function attack() {
-  playerAttack.push(Math.floor(dealMonsterDamage(damage)));
-  monsterAttack.push(Math.floor(dealPlayerDamage(damage)));
-  operation.push('ATTACK');
-  logic();
-}
-
-function strongAttack() {
-  playerAttack.push(Math.floor(dealMonsterDamage(damage * 2)));
-  monsterAttack.push(Math.floor(dealPlayerDamage(damage * 2)));
-  operation.push('STRONG ATTACK');
+function attack(msg, n) {
+  playerAttack.push(Math.floor(dealMonsterDamage(damage * n)));
+  monsterAttack.push(Math.floor(dealPlayerDamage(damage * n)));
+  operation.push(msg);
   logic();
 }
 
@@ -65,7 +58,7 @@ function logic() {
     alert(`Bonus life saved you !
       your health is at ${health / 5}`);
     setPlayerHealth(health / 5);
-    if (!life) removeBonusLife();
+    !life ? removeBonusLife() : null;
   } else {
     if (monsterHealthBar.value === 0 && playerHealthBar.value > 0) {
       alert('PLAYER WON !');
@@ -83,7 +76,10 @@ function logic() {
   }
 }
 
-attackBtn.addEventListener('click', attack);
-strongAttackBtn.addEventListener('click', strongAttack);
+attackBtn.addEventListener('click', attack.bind(this, 'ATTACK', 1));
+strongAttackBtn.addEventListener(
+  'click',
+  attack.bind(this, 'STRONG ATTACK', 2)
+);
 healBtn.addEventListener('click', healing);
 logBtn.addEventListener('click', log);
