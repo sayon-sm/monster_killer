@@ -21,18 +21,25 @@ let operation = [];
 let monsterDamage;
 let playerDamage;
 
-function attack(msg, n) {
-  playerAttack.push(Math.floor(dealMonsterDamage(damage * n)));
-  monsterAttack.push(Math.floor(dealPlayerDamage(damage * n)));
-  operation.push(msg);
-  logic();
+function attack(msg, n, c = 'yes') {
+  switch (c) {
+    case 'yes':
+      playerAttack.push(Math.floor(dealMonsterDamage(damage * n)));
+    default:
+      monsterAttack.push(Math.floor(dealPlayerDamage(damage * (n + 0.5))));
+      operation.push(msg);
+      logic();
+  }
 }
 
 function healing() {
-  playerHealthBar.value < health / 2
-    ? increasePlayerHealth(heal)
-    : alert('healing not allowed \npast half life !');
-  operation.push('HEAL');
+  if (playerHealthBar.value < health / 2) {
+    increasePlayerHealth(heal);
+    operation.push('HEAL');
+    attack(null, 1, 'no');
+  } else {
+    alert('healing not allowed \npast half life !');
+  }
 }
 
 function loging(verdict, operation, monsterDamage, playerDamage) {
@@ -78,10 +85,10 @@ function logic() {
   }
 }
 
-attackBtn.addEventListener('click', attack.bind(this, 'ATTACK', 1));
+attackBtn.addEventListener('click', attack.bind(this, 'ATTACK', 1, 'yes'));
 strongAttackBtn.addEventListener(
   'click',
-  attack.bind(this, 'STRONG ATTACK', 2)
+  attack.bind(this, 'STRONG ATTACK', 2, 'yes')
 );
 healBtn.addEventListener('click', healing);
 logBtn.addEventListener('click', log);
