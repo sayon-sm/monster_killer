@@ -1,15 +1,17 @@
 'use strict';
 /* taking user input for maximum life
 checking if its a valid number */
-let health = parseInt(prompt('enter max health of your player', '100'));
-if (!health || health < 0) {
+let health = parseInt(
+  prompt('enter max health of your player, a value more than 10', '100')
+);
+if (!health || health < 10) {
   health = 100;
   alert('invalid input \nmax life is 100');
 }
 adjustHealthBars(health);
 let life = 1; //bonus life counter
-const damage = health / 10;
-const heal = health / 15;
+const damage = 5;
+const heal = 15;
 
 // variable to maintain log
 let history = [];
